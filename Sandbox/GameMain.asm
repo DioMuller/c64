@@ -3,8 +3,8 @@
 
 *=$0801 ; 10 SYS (2049)
 
-        byte    $0E, $08, $0A, $00, $9E, $20, $28, $32
-        byte    $30, $34, $39, $29, $00, $00, $00
+        byte $0E, $08, $0A, $00, $9E, $20, $28, $32
+        byte $30, $36, $34, $29, $00, $00, $00
 
 ;===============================================================================
 ; Initialization
@@ -32,9 +32,9 @@
 
 gMainLoop
         LIBSCREEN_WAIT_V 255
-        ;inc EXTCOL ; start code timer change border color
+        inc EXTCOL ; start code timer change border color
 
         ; Game update code goes here
 
-        ;dec EXTCOL ; end code timer reset border color
+        dec EXTCOL ; end code timer reset border color
         jmp gMainLoop

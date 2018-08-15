@@ -38,8 +38,8 @@
     </BuildEvents>
     <BuildList>
         <FileName>GameMain.asm</FileName>
-        <FileName>LibScreen.asm</FileName>
         <FileName>LibMath.asm</FileName>
+        <FileName>LibScreen.asm</FileName>
         <FileName>GameMemory.asm</FileName>
     </BuildList>
     <DetermineBuildOrder>1</DetermineBuildOrder>

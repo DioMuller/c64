@@ -1,3 +1,5 @@
 *.tmp
 *.dmp
 bak
+*dmp
+*.prg
