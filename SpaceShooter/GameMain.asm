@@ -30,6 +30,9 @@
         ; Set sprite colors
         LIBSPRITE_SETMULTICOLORS_VV Cyan, MediumGray
 
+        ; Set the memory location of the custom character set
+        LIBSCREEN_SETCHARMEMORY 14
+
         ; Initialize Player
         jsr gamePlayerInit
 
@@ -46,6 +49,10 @@ gameMainLoop
 
         ; Update the player
         jsr gamePlayerUpdate
+
+        ; Update Game Bullets
+        jsr gameBulletsUpdate
+
 
         ; Loop back to the start of the loop.
         jmp gameMainLoop

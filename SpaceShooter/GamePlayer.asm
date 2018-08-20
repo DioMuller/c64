@@ -19,6 +19,10 @@ playerSprite    byte 0
 playerXHigh     byte 0
 playerXLow      byte 175
 playerY         byte 229
+playerXChar     byte 0
+playerXOffset   byte 0
+playerYChar     byte 0
+playerYOffset   byte 0
 
 ;-------------------------------------------------------------------------------
 ; Subroutines
@@ -37,10 +41,26 @@ gamePlayerInit
 ;-------------------------------------------------------------------------------
 ; Update Player values
 
+; Update Player
 gamePlayerUpdate
         jsr gamePlayerUpdatePosition
+        jsr gamePlayerUpdateFiring
+
         rts
 
+; Update Player Shooting
+gamePlayerUpdateFiring
+
+        ; do fire after the ship has been clamped to position
+        ; so that the bullet lines up
+        LIBINPUT_GETFIREPRESSED
+        bne gamePlayerUpdateNoFire
+     
+        GAMEBULLETS_FIRE_AAAVV playerXChar, playerXOffset, playerYChar, White, True
+gamePlayerUpdateNoFire
+        rts
+
+; Update Player Position
 gamePlayerUpdatePosition
         LIBINPUT_GETHELD GameportLeftMask
         bne gamePlayerUpdateRight
@@ -69,5 +89,9 @@ gamePlayerUpdateRightEndMove
 
         ; set the sprite position
         LIBSPRITE_SETPOSITION_AAAA playerSprite, playerXHigh, playerXLow, playerY
+
+        ; update the player char positions
+        LIBSCREEN_PIXELTOCHAR_AAVAVAAAA playerXHigh, playerXLow, 12, playerY, 40, playerXChar, playerXOffset, playerYChar, playerYOffset
+
 
         rts

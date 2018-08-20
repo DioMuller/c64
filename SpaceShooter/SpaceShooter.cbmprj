@@ -44,11 +44,34 @@
         <FileName>LibScreen.asm</FileName>
         <FileName>LibSprite.asm</FileName>
         <FileName>GameMemory.asm</FileName>
+        <FileName>GameBullets.asm</FileName>
     </BuildList>
     <DetermineBuildOrder>1</DetermineBuildOrder>
     <PaddingByte>0</PaddingByte>
     <AssyBinaryFileLocation />
     <SourceFiles>
+        <SourceFile>
+            <Name>Characters.cst</Name>
+            <PrgName />
+            <FileType>6</FileType>
+            <IncludeInBuild>True</IncludeInBuild>
+            <Regions />
+            <Breakpoints />
+            <Bookmarks />
+            <Topmost>False</Topmost>
+            <FileOpen>False</FileOpen>
+        </SourceFile>
+        <SourceFile>
+            <Name>GameBullets.asm</Name>
+            <PrgName />
+            <FileType>2</FileType>
+            <IncludeInBuild>True</IncludeInBuild>
+            <Regions />
+            <Breakpoints />
+            <Bookmarks />
+            <Topmost>False</Topmost>
+            <FileOpen>True</FileOpen>
+        </SourceFile>
         <SourceFile>
             <Name>GameMain.asm</Name>
             <PrgName />

@@ -41,6 +41,9 @@ SPRITERAM       = 192
 * = $3000
         incbin Sprites.bin
 
+* = $3800
+        incbin Characters.bin
+
 ;===============================================================================
 ; $A000-$BFFF  BASIC ROM (8K)
 
