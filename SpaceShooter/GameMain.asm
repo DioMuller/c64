@@ -36,6 +36,9 @@
         ; Initialize Player
         jsr gamePlayerInit
 
+        ; Initialize Enemies
+        jsr gameEnemiesInit
+
 ;-------------------------------------------------------------------------------
 ; Main Game Loop
 ;-------------------------------------------------------------------------------
@@ -49,6 +52,9 @@ gameMainLoop
 
         ; Update the player
         jsr gamePlayerUpdate
+
+        ; Update the Aliens
+        jsr gameEnemiesUpdate
 
         ; Update Game Bullets
         jsr gameBulletsUpdate

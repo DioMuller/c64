@@ -2,7 +2,7 @@
 ; Constants
 ;-------------------------------------------------------------------------------
 
-PlayerFrame             = 1
+PlayerFrame             = 0     ; Player Sprite. 0-4
 PlayerHorizontalSpeed   = 2
 PlayerVerticalSpeed     = 1
 PlayerXMinHigh          = 0     ; 0*256 + 24 = 24  minX
@@ -23,6 +23,7 @@ playerXChar     byte 0
 playerXOffset   byte 0
 playerYChar     byte 0
 playerYOffset   byte 0
+playerActive    byte True
 
 ;-------------------------------------------------------------------------------
 ; Subroutines
@@ -39,45 +40,46 @@ gamePlayerInit
         rts
 
 ;-------------------------------------------------------------------------------
-; Update Player values
-
 ; Update Player
 gamePlayerUpdate
         jsr gamePlayerUpdatePosition
+        jsr gamePlayerUpdateCollisions
         jsr gamePlayerUpdateFiring
 
         rts
 
+;-------------------------------------------------------------------------------
 ; Update Player Shooting
 gamePlayerUpdateFiring
-
         ; do fire after the ship has been clamped to position
         ; so that the bullet lines up
         LIBINPUT_GETFIREPRESSED
-        bne gamePlayerUpdateNoFire
-     
+        bne _noFire  
         GAMEBULLETS_FIRE_AAAVV playerXChar, playerXOffset, playerYChar, White, True
-gamePlayerUpdateNoFire
+
+; No Firing
+_noFire
         rts
 
+;-------------------------------------------------------------------------------
 ; Update Player Position
 gamePlayerUpdatePosition
         LIBINPUT_GETHELD GameportLeftMask
-        bne gamePlayerUpdateRight
+        bne _updateRight
         LIBMATH_SUB16BIT_AAVVAA playerXHigh, PlayerXLow, 0, PlayerHorizontalSpeed, playerXHigh, PlayerXLow
-gamePlayerUpdateRight
+_updateRight
         LIBINPUT_GETHELD GameportRightMask
-        bne gamePlayerUpdateUp
+        bne _updateUp
         LIBMATH_ADD16BIT_AAVVAA playerXHigh, PlayerXLow, 0, PlayerHorizontalSpeed, playerXHigh, PlayerXLow
-gamePlayerUpdateUp
+_updateUp
         LIBINPUT_GETHELD GameportUpMask
-        bne gamePlayerUpdateDown
+        bne _updateDown
         LIBMATH_SUB8BIT_AVA PlayerY, PlayerVerticalSpeed, PlayerY
-gamePlayerUpdateDown
+_updateDown
         LIBINPUT_GETHELD GameportDownMask
-        bne gamePlayerUpdateRightEndMove
+        bne _endMove
         LIBMATH_ADD8BIT_AVA PlayerY, PlayerVerticalSpeed, PlayerY        
-gamePlayerUpdateRightEndMove
+_endMove
 
         ; clamp the player x position
         LIBMATH_MIN16BIT_AAVV playerXHigh, playerXLow, PlayerXMaxHigh, PlayerXMaxLow
@@ -92,6 +94,17 @@ gamePlayerUpdateRightEndMove
 
         ; update the player char positions
         LIBSCREEN_PIXELTOCHAR_AAVAVAAAA playerXHigh, playerXLow, 12, playerY, 40, playerXChar, playerXOffset, playerYChar, playerYOffset
+        rts
 
-
+;-------------------------------------------------------------------------------
+; Update Player Collisions
+gamePlayerUpdateCollisions
+        GAMEBULLETS_COLLIDED playerXChar, playerYChar, False
+        beq _playerNoCollision
+        lda #False
+        sta playerActive
+        ; run explosion animation
+        LIBSPRITE_SETCOLOR_AV     playerSprite, Yellow
+        LIBSPRITE_PLAYANIM_AVVVV  playerSprite, 4, 15, 3, False                    
+_playerNoCollision
         rts

@@ -277,12 +277,12 @@ defm    LIBSPRITE_STOPANIM_A            ; /1 = Sprite Number    (Address)
 libSpritesUpdate
 
         ldx #0
-lSoULoop
+_loop
         ; skip this sprite anim if not active
         lda spriteAnimsActive,X
-        bne lSoUActive
-        jmp lSoUSkip
-lSoUActive
+        bne _active
+        jmp _skip
+_active
 
         stx spriteAnimsCurrent
         lda spriteAnimsFrame,X
@@ -294,7 +294,7 @@ lSoUActive
         LIBSPRITE_SETFRAME_AA spriteAnimsCurrent, spriteAnimsFrameCurrent
 
         dec spriteAnimsDelay,X
-        bne lSoUSkip
+        bne _skip
 
         ; reset the delay
         lda spriteAnimsSpeed,X
@@ -306,30 +306,29 @@ lSoUActive
         ; check if reached the end frame
         lda spriteAnimsEndFrameCurrent
         cmp spriteAnimsFrame,X
-        bcs lSoUSkip
+        bcs _skip
 
         ; check if looping
         lda spriteAnimsLoop,X
-        beq lSoUDestroy
+        beq _destroy
 
         ; reset the frame
         lda spriteAnimsStartFrame,X
         sta spriteAnimsFrame,X
-        jmp lSoUSkip
+        jmp _skip
 
-lSoUDestroy
+_destroy
         ; turn off
         lda #False
         sta spriteAnimsActive,X
         LIBSPRITE_ENABLE_AV spriteAnimsCurrent, False
 
-lSoUSkip
+_skip
         ; loop for each sprite anim
         inx
         cpx #SpriteAnimsMax
         ;bne lSUloop
-        beq lSoUFinished
-        jmp lSoUloop
-lSoUFinished
-
+        beq _finished
+        jmp _loop
+_finished
         rts
