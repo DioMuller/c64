@@ -56,6 +56,8 @@ gamePlayerUpdateFiring
         LIBINPUT_GETFIREPRESSED
         bne _noFire  
         GAMEBULLETS_FIRE_AAAVV playerXChar, playerXOffset, playerYChar, White, True
+        ; play the firing sound
+        LIBSOUND_PLAY_VAA 0, soundFiringHigh, soundFiringLow
 
 ; No Firing
 _noFire
@@ -105,6 +107,10 @@ gamePlayerUpdateCollisions
         sta playerActive
         ; run explosion animation
         LIBSPRITE_SETCOLOR_AV     playerSprite, Yellow
-        LIBSPRITE_PLAYANIM_AVVVV  playerSprite, 5, 15, 3, False                    
+        LIBSPRITE_PLAYANIM_AVVVV  playerSprite, 5, 15, 3, False
+
+        ; play the explosion sound
+        LIBSOUND_PLAY_VAA 1, soundExplosionHigh, soundExplosionLow
+                    
 _playerNoCollision
         rts

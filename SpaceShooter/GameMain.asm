@@ -33,11 +33,11 @@
         ; Set the memory location of the custom character set
         LIBSCREEN_SETCHARMEMORY 14
 
-        ; Initialize Player
-        jsr gamePlayerInit
+        ; Initialize the libraries
+        jsr libSoundInit
 
-        ; Initialize Enemies
-        jsr gameEnemiesInit
+        ; Initialize the game
+        jsr gamePlayerInit
 
 ;-------------------------------------------------------------------------------
 ; Main Game Loop
@@ -61,6 +61,9 @@ gameMainLoop
 
         ; Update Game Background
         jsr gameBackgroundUpdate
+
+        ; Update Sound Library
+        jsr libSoundUpdate
 
 
         ; Loop back to the start of the loop.

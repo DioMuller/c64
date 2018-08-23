@@ -209,6 +209,9 @@ gameEnemiesUpdateCollisions
         LIBSPRITE_SETCOLOR_AV         enemiesSprite, Yellow
         LIBSPRITE_MULTICOLORENABLE_AV enemiesSprite, True
 
+        ; play the explosion sound
+        LIBSOUND_PLAY_VAA 1, soundExplosionHigh, soundExplosionLow
+
         lda #False
         sta enemiesActive
 _enemyNoCollision

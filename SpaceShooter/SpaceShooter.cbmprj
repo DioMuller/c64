@@ -38,15 +38,16 @@
     </BuildEvents>
     <BuildList>
         <FileName>GameMain.asm</FileName>
+        <FileName>GameEnemies.asm</FileName>
+        <FileName>GameBullets.asm</FileName>
         <FileName>GamePlayer.asm</FileName>
-        <FileName>LibMath.asm</FileName>
+        <FileName>GameBackground.asm</FileName>
         <FileName>LibInput.asm</FileName>
+        <FileName>LibMath.asm</FileName>
         <FileName>LibScreen.asm</FileName>
+        <FileName>LibSound.asm</FileName>
         <FileName>LibSprite.asm</FileName>
         <FileName>GameMemory.asm</FileName>
-        <FileName>GameBullets.asm</FileName>
-        <FileName>GameEnemies.asm</FileName>
-        <FileName>GameBackground.asm</FileName>
     </BuildList>
     <DetermineBuildOrder>1</DetermineBuildOrder>
     <PaddingByte>0</PaddingByte>
@@ -104,7 +105,7 @@
             <Regions />
             <Breakpoints />
             <Bookmarks />
-            <Topmost>False</Topmost>
+            <Topmost>True</Topmost>
             <FileOpen>True</FileOpen>
         </SourceFile>
         <SourceFile>
@@ -163,6 +164,17 @@
             <FileOpen>True</FileOpen>
         </SourceFile>
         <SourceFile>
+            <Name>LibSound.asm</Name>
+            <PrgName />
+            <FileType>2</FileType>
+            <IncludeInBuild>True</IncludeInBuild>
+            <Regions />
+            <Breakpoints />
+            <Bookmarks />
+            <Topmost>False</Topmost>
+            <FileOpen>True</FileOpen>
+        </SourceFile>
+        <SourceFile>
             <Name>LibSprite.asm</Name>
             <PrgName />
             <FileType>2</FileType>
@@ -170,7 +182,7 @@
             <Regions />
             <Breakpoints />
             <Bookmarks />
-            <Topmost>True</Topmost>
+            <Topmost>False</Topmost>
             <FileOpen>True</FileOpen>
         </SourceFile>
         <SourceFile>
