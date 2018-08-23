@@ -12,6 +12,10 @@ PlayerXMaxLow           = 64
 PlayerYMin              = 180
 PlayerYMax              = 229 
 
+PlayerStartXHigh        = 0
+PlayerStartXLow         = 175
+PlayerStartY            = 229
+
 ;-------------------------------------------------------------------------------
 ; Variables
 ;-------------------------------------------------------------------------------
@@ -42,10 +46,21 @@ gamePlayerInit
 ;-------------------------------------------------------------------------------
 ; Update Player
 gamePlayerUpdate
-        jsr gamePlayerUpdatePosition
-        jsr gamePlayerUpdateCollisions
-        jsr gamePlayerUpdateFiring
+        lda playerActive
+        beq _playerUpdateSkip
 
+        jsr gamePlayerUpdatePosition
+        jsr gamePlayerUpdateFiring
+        jsr gamePlayerUpdateCollisions
+
+_playerUpdateSkip
+        lda playerActive
+        bne _playerUpdateDontReset
+        LIBSPRITE_ISANIMPLAYING_A playerSprite
+        bne _playerUpdateDontReset
+        jsr gamePlayerReset
+
+_playerUpdateDontReset
         rts
 
 ;-------------------------------------------------------------------------------
@@ -55,6 +70,7 @@ gamePlayerUpdateFiring
         ; so that the bullet lines up
         LIBINPUT_GETFIREPRESSED
         bne _noFire  
+
         GAMEBULLETS_FIRE_AAAVV playerXChar, playerXOffset, playerYChar, White, True
         ; play the firing sound
         LIBSOUND_PLAY_VAA 0, soundFiringHigh, soundFiringLow
@@ -105,6 +121,7 @@ gamePlayerUpdateCollisions
         beq _playerNoCollision
         lda #False
         sta playerActive
+
         ; run explosion animation
         LIBSPRITE_SETCOLOR_AV     playerSprite, Yellow
         LIBSPRITE_PLAYANIM_AVVVV  playerSprite, 5, 15, 3, False
@@ -113,4 +130,25 @@ gamePlayerUpdateCollisions
         LIBSOUND_PLAY_VAA 1, soundExplosionHigh, soundExplosionLow
                     
 _playerNoCollision
+        rts
+
+;-------------------------------------------------------------------------------
+; Player Reset
+gamePlayerReset
+
+        lda #True
+        sta playerActive
+
+        LIBSPRITE_ENABLE_AV             playerSprite, True
+        LIBSPRITE_SETFRAME_AV           playerSprite, PlayerFrame
+        LIBSPRITE_SETCOLOR_AV           playerSprite, LightGray
+        
+        lda #PlayerStartXHigh
+        sta playerXHigh
+        lda #PlayerStartXLow
+        sta PlayerXLow
+        lda #PlayerStartY
+        sta PlayerY
+        LIBSPRITE_SETPOSITION_AAAA playerSprite, playerXHigh, playerXLow, playerY
+        
         rts

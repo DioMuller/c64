@@ -176,6 +176,7 @@ _dontReset
 
         LIBMATH_ADD16BIT_AAVAAA enemiesXHigh, enemiesXLow, 0, enemiesXLocal, enemiesXHigh, enemiesXLow        
         LIBSPRITE_SETPOSITION_AAAA enemiesSprite, enemiesXHigh, enemiesXLow, enemiesY
+
         ; update the alien char positions
         LIBSCREEN_PIXELTOCHAR_AAVAVAAAA enemiesXHigh, enemiesXLow, 12, enemiesY, 40, enemiesXChar, enemiesXOffset, enemiesYChar, enemiesYOffset
         rts

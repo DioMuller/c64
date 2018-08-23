@@ -38,6 +38,7 @@
 
         ; Initialize the game
         jsr gamePlayerInit
+        jsr gameEnemiesInit
 
 ;-------------------------------------------------------------------------------
 ; Main Game Loop
@@ -47,24 +48,16 @@ gameMainLoop
         ; Wait for scanline 255
         LIBSCREEN_WAIT_V 255
 
-        ; Update the input library
+        ; Update the libraries
         jsr libInputUpdate
-
-        ; Update the player
-        jsr gamePlayerUpdate
-
-        ; Update the Aliens
-        jsr gameEnemiesUpdate
-
-        ; Update Game Bullets
-        jsr gameBulletsUpdate
-
-        ; Update Game Background
-        jsr gameBackgroundUpdate
-
-        ; Update Sound Library
+        jsr libSpritesUpdate
         jsr libSoundUpdate
 
+        ; Update the game
+        jsr gamePlayerUpdate
+        jsr gameEnemiesUpdate
+        jsr gameBulletsUpdate
+        jsr gameBackgroundUpdate
 
         ; Loop back to the start of the loop.
         jmp gameMainLoop
