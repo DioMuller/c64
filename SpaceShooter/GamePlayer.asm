@@ -105,6 +105,6 @@ gamePlayerUpdateCollisions
         sta playerActive
         ; run explosion animation
         LIBSPRITE_SETCOLOR_AV     playerSprite, Yellow
-        LIBSPRITE_PLAYANIM_AVVVV  playerSprite, 4, 15, 3, False                    
+        LIBSPRITE_PLAYANIM_AVVVV  playerSprite, 5, 15, 3, False                    
 _playerNoCollision
         rts

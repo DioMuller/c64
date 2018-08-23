@@ -19,7 +19,7 @@
         sta $0328
 
         ; Set border and background colors
-        LIBSCREEN_SETCOLORS Blue, Black, Black, Black, Black
+        LIBSCREEN_SETCOLORS Black, Black, Black, Black, Black
 
         ; Fill 1000 bytes (40x25) of Screen Memory
         LIBSCREEN_SET1000 SCREENRAM, SpaceCharacter
@@ -58,6 +58,9 @@ gameMainLoop
 
         ; Update Game Bullets
         jsr gameBulletsUpdate
+
+        ; Update Game Background
+        jsr gameBackgroundUpdate
 
 
         ; Loop back to the start of the loop.

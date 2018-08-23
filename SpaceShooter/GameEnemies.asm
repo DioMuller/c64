@@ -126,7 +126,6 @@ _updated
 
 ;-------------------------------------------------------------------------------
 gameEnemiesGetVariables
-
         lda enemiesActiveArray,X
         sta enemiesActive
         lda enemiesFrameArray,X
