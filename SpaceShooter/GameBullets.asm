@@ -47,6 +47,31 @@ gameBulletsGet
         rts
 
 ;-------------------------------------------------------------------------------
+
+gameBulletsReset
+
+        ldx #0
+        
+_bulletsResetLoop
+        lda bulletsActive,x
+        beq _bulletsResetSkip
+
+        ; remove the bullet from the screen
+        jsr gameBulletsGet
+        LIBSCREEN_SETCHARPOSITION_AA bulletsXCharCurrent, bulletsYCharCurrent
+        LIBSCREEN_SETCHAR_V SpaceCharacter
+
+        lda #0
+        sta bulletsActive,x
+
+_bulletsResetSkip
+        inx
+        cpx #BulletsMax
+        bne _bulletsResetLoop       ; loop for each bullet
+
+        rts
+
+;-------------------------------------------------------------------------------
 gameBulletsUpdate
 
         ldx #0

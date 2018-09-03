@@ -92,6 +92,33 @@ _initLoop
         rts
 
 ;-------------------------------------------------------------------------------
+gameEnemiesReset
+
+        lda #True
+        ldx #0
+        stx enemiesSprite
+_enemiesResetLoop
+        inc enemiesSprite ; x+1
+
+        jsr gameEnemiesGetVariables
+
+        sta enemiesActive 
+
+        LIBSPRITE_ENABLE_AV           enemiesSprite, True
+        LIBSPRITE_SETFRAME_AA         enemiesSprite, enemiesFrame
+        LIBSPRITE_SETCOLOR_AA         enemiesSprite, enemiesColor
+        LIBSPRITE_MULTICOLORENABLE_AA enemiesSprite, enemiesMultiColor
+        
+        jsr gameEnemiesSetVariables
+
+        ; loop for each alien
+        inx
+        cpx #EnemiesMax
+        bne _enemiesResetLoop
+
+        rts
+
+;-------------------------------------------------------------------------------
 gameEnemiesUpdate
 
         ldx #0
@@ -212,6 +239,9 @@ gameEnemiesUpdateCollisions
 
         ; play the explosion sound
         LIBSOUND_PLAY_VAA 1, soundExplosionHigh, soundExplosionLow
+
+        ; increase the score
+        jsr gameFlowIncreaseScore
 
         lda #False
         sta enemiesActive

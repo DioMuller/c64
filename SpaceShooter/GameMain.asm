@@ -39,6 +39,7 @@
         ; Initialize the game
         jsr gamePlayerInit
         jsr gameEnemiesInit
+        jsr gameFlowInit
 
 ;-------------------------------------------------------------------------------
 ; Main Game Loop
@@ -58,6 +59,7 @@ gameMainLoop
         jsr gameEnemiesUpdate
         jsr gameBulletsUpdate
         jsr gameBackgroundUpdate
+        jsr gameFlowUpdate
 
         ; Loop back to the start of the loop.
         jmp gameMainLoop

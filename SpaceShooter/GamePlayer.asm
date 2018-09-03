@@ -27,7 +27,7 @@ playerXChar     byte 0
 playerXOffset   byte 0
 playerYChar     byte 0
 playerYOffset   byte 0
-playerActive    byte True
+playerActive    byte False
 
 ;-------------------------------------------------------------------------------
 ; Subroutines
@@ -54,13 +54,6 @@ gamePlayerUpdate
         jsr gamePlayerUpdateCollisions
 
 _playerUpdateSkip
-        lda playerActive
-        bne _playerUpdateDontReset
-        LIBSPRITE_ISANIMPLAYING_A playerSprite
-        bne _playerUpdateDontReset
-        jsr gamePlayerReset
-
-_playerUpdateDontReset
         rts
 
 ;-------------------------------------------------------------------------------
@@ -128,6 +121,9 @@ gamePlayerUpdateCollisions
 
         ; play the explosion sound
         LIBSOUND_PLAY_VAA 1, soundExplosionHigh, soundExplosionLow
+
+        ; decrease the number of lives
+        jsr gameFlowPlayerDied
                     
 _playerNoCollision
         rts
