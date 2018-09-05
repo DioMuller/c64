@@ -7,7 +7,7 @@ PlayerJumpLeftAnim      = 9
 PlayerJumpRightAnim     = 4
 
 PlayerFrame             = 1
-PlayerHorizontalSpeed   = 2
+PlayerHorizontalSpeed   = 5
 PlayerXMinHigh          = 0     ; 0*256 + 20 = 20  minX
 PlayerXMinLow           = 20
 PlayerXMaxHigh          = 1     ; 1*256 + 68 = 324 maxX
